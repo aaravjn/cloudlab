@@ -1,6 +1,10 @@
 import libvirt
+
 from gen_rand_matrix import generate_matrix
 import random
+import subprocess
+import base64
+import json
 
 VMS = {
     "high": {
@@ -23,27 +27,39 @@ MAX_MATRIX_SIZE = 100
 NUMBER_OF_JOBS = 15
 
 def assign_job(mat1, mat2):
-    conn = libvirt.open('qemu:///system')
-    if conn is None:
-        raise Exception('Failed to open connection to the hypervisor')
+    virsh_command = """virsh -c qemu:///system qemu-agent-command newUbuntu '{"execute": "guest-exec", "arguments":{"path" : "/home/vboxuser/exe", "arg" : ["1","1$","2$"], "capture-output":true}}'"""
 
-    domain_name = 'your_vm_name_or_uuid'
-    domain = conn.lookupByName(domain_name)
+    output  = subprocess.run(virsh_command, stdout=subprocess.PIPE, text=True, shell = True )
+    stdout_string = output.stdout
 
-    cmd = '{"execute":"guest-info"}'
-    result = domain.qemuAgentCommand(cmd, 0)
-    if result[0] == 0:
-        data = result[1]['return']
-        print(f"Guest Hostname: {data['host-name']}")
-    else:
-        print("Failed to get guest info")
+    out = json.loads(stdout_string)
+    # print(out["return"]["pid"])
 
-    conn.close() 
+    virsh_command = """virsh -c qemu:///system qemu-agent-command newUbuntu \'{"execute": "guest-exec-status", "arguments": {"pid":"""+ str(out["return"]["pid"]) +"""}}\'"""
+
+    output  = subprocess.run(virsh_command, stdout=subprocess.PIPE, text=True, shell = True )
+    stdout_string = output.stdout
+
+    out = json.loads(stdout_string)
+    
+
+    encoded_data = str(out["return"]["out-data"])
+
+    # Decode the Base64 data
+    decoded_data = base64.b64decode(encoded_data)
+
+    # Convert the decoded data to a string
+    string_output = str(decoded_data)
+
+    # Print the decoded data
+    print(string_output)
+
 
 
 
 for i in range(NUMBER_OF_JOBS):
-    matrix_size = random.randint(MAX_MATRIX_SIZE)
+    matrix_size = random.randint(1, MAX_MATRIX_SIZE)
+
 
     mat1 = generate_matrix(matrix_size)
     mat2 = generate_matrix(matrix_size)
