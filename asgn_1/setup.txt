@@ -1,0 +1,2 @@
+sudo apt install pkg-config libvirt-dev
+pip3 install libvirt-python
