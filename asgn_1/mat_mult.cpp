@@ -28,23 +28,24 @@ vector<vector<int>> extract(int n, char* str) {
 	int i = 0, j = 0;
 	vector<vector<int>> matrix(n);
 	
-	string s = "";
+	int s = 0;
 	while(str[i] != '$') {
 		if(str[i] == '.') {
-			matrix[j].push_back(stoi(s));
-			s = "";
+			matrix[j].push_back(s);
+			s = 0;
 		}
 		else if(str[i] == ',') {
-			matrix[j].push_back(stoi(s));
+			matrix[j].push_back(s);
 			j++;
-			s = "";
+			s = 0;
 		}
 		else {
-			s += str[i];
+			s *= 10;
+			s += str[i] - '0';
 		}
 		i++;
 	}
-	matrix[j].push_back(stoi(s));
+	matrix[j].push_back(s);
 
 	return matrix;
 }
