@@ -51,11 +51,16 @@ vector<vector<int>> extract(int n, char* str) {
 }
 
 int main(int argc, char** argv) {
+
+	time_t start, end;
+
 	int n;
 	sscanf(argv[1], "%d", &n);
 
 	char* mat1 = argv[2];
 	char* mat2 = argv[3];
+
+	time(&start);
 
 	vector<vector<int>> matrix1(n), matrix2(n);
 	matrix1 = extract(n, mat1);
@@ -71,6 +76,10 @@ int main(int argc, char** argv) {
 		cout<<endl;
 	}
 
+	time(&end);
+
+	double time_taken = double(end - start);
+	cout<<time_taken<<endl;
 }
 
 // ./a.out 3 1.1.2,1.1.3,1.1.4$ 1.1.2,1.1.3,1.1.4$

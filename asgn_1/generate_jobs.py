@@ -25,7 +25,7 @@ MAX_MATRIX_SIZE = 100
 NUMBER_OF_JOBS = 15
 
 def assign_job(matrix_size : int, mat1 : str, mat2 : str, vm : str) -> None:
-    virsh_command = """virsh -c qemu:///system qemu-agent-command %s '{"execute": "guest-exec", "arguments":{"path" : "/home/vboxuser/exe", "arg" : [%s, %s, %s], "capture-output":true}}'""" % (vm, matrix_size, mat1, mat2)
+    virsh_command = """virsh -c qemu:///system qemu-agent-command %s '{"execute": "guest-exec", "arguments":{"path" : "/home/aarav/mat_mult", "arg" : [%s, %s, %s], "capture-output":true}}'""" % (vm, matrix_size, mat1, mat2)
 
     output = subprocess.run(virsh_command, stdout=subprocess.PIPE, text=True, shell = True)
     stdout_string = output.stdout
