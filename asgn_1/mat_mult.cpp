@@ -2,10 +2,12 @@
 This script will run in the Virtual Machine
 */
 
-#include <bits/stdc++.h>
+#include <vector>
+#include <chrono>
+#include <iostream>
 
 using namespace std;
-
+using namespace std::chrono;
 
 vector<vector<int>> multiply(vector<vector<int>> matrix1, vector<vector<int>> matrix2) {
 	int n = matrix1.size();
@@ -51,16 +53,14 @@ vector<vector<int>> extract(int n, char* str) {
 }
 
 int main(int argc, char** argv) {
-
-	time_t start, end;
-
+	
 	int n;
 	sscanf(argv[1], "%d", &n);
 
 	char* mat1 = argv[2];
 	char* mat2 = argv[3];
 
-	time(&start);
+	auto start = high_resolution_clock::now();
 
 	vector<vector<int>> matrix1(n), matrix2(n);
 	matrix1 = extract(n, mat1);
@@ -76,10 +76,10 @@ int main(int argc, char** argv) {
 		cout<<endl;
 	}
 
-	time(&end);
+	auto end = high_resolution_clock::now();
 
-	double time_taken = double(end - start);
-	cout<<time_taken<<endl;
+	auto time_taken = duration_cast<milliseconds>(end - start);
+	cout<<time_taken.count()<<endl;
 }
 
 // ./a.out 3 1.1.2,1.1.3,1.1.4$ 1.1.2,1.1.3,1.1.4$
