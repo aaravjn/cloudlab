@@ -1,29 +1,62 @@
 /*
-This script will run in the Virtual Machine
+	This script will run in the Virtual Machine
+	Each row of the resultant matrix will be computed in a seperate thread thus,
+	greately reducing the execution time of the matrix.
+	This also puts a system depencency that more the numbers of CPU cores, more will be the number of threads
+	computed simultaneously.
 */
+
 
 #include <vector>
 #include <chrono>
 #include <iostream>
+#include <thread>
 
 using namespace std;
 using namespace std::chrono;
 
-vector<vector<int>> multiply(vector<vector<int>> matrix1, vector<vector<int>> matrix2) {
-	int n = matrix1.size();
+int SIZE;
+vector<vector<int>> matrix1, matrix2, matrixResultant;
 
-	vector<vector<int>> result(n, vector<int> (n));
-	for(int i = 0;i < n;i++) {
-		for(int j = 0;j < n;j++) {
-			int sum = 0;
-			for(int k = 0;k < n;k++) {
-				sum += matrix1[i][k] * matrix2[k][j];
-				result[i][j] = sum;
-			}
+int currRow = 0; // Represents the current row of execution by any thread
+
+void* compute(void* arg) {
+	int i = currRow++;
+
+	for(int j = 0;j < SIZE;j++) {
+		for(int k = 0;k < SIZE;k++) {
+			matrixResultant[i][j] = matrix1[i][k] + matrix2[k][j];
 		}
 	}
 
-	return result;
+	return NULL;
+}
+
+void multiply(vector<vector<int>> matrix1, vector<vector<int>> matrix2) {
+	pthread_t threads[SIZE];
+
+	for(int i = 0;i < SIZE;i++) {
+        pthread_create(&threads[i], NULL, compute, NULL);
+	}
+
+	for(int i = 0;i < SIZE;i++) {
+		pthread_join(threads[i], NULL);
+	}
+
+
+	// Single threaded code for computing matrix multiplication
+	/*
+		for(int i = 0;i < SIZE;i++) {
+			for(int j = 0;j < SIZE;j++) {
+				for(int k = 0;k < SIZE;k++) {
+					matrixResultant[i][j] = matrix1[i][k] + matrix2[k][j];
+				}
+			}
+		}
+	*/
+
+
+
 }
 
 vector<vector<int>> extract(int n, char* str) {
@@ -56,29 +89,30 @@ int main(int argc, char** argv) {
 	
 	int n;
 	sscanf(argv[1], "%d", &n);
+	SIZE = n;
+	matrixResultant.resize(n, vector<int> (n));
 
 	char* mat1 = argv[2];
 	char* mat2 = argv[3];
 
 	auto start = high_resolution_clock::now();
-
-	vector<vector<int>> matrix1(n), matrix2(n);
+	
 	matrix1 = extract(n, mat1);
 	matrix2 = extract(n, mat2);
 	
 	
-	vector<vector<int>> result = multiply(matrix1, matrix2);
+	multiply(matrix1, matrix2);
 
 	for(int i = 0;i < n;i++) {
 		for(int j = 0;j < n;j++) {
-			cout<<result[i][j]<<' ';
+			cout<<matrixResultant[i][j]<<' ';
 		}
 		cout<<endl;
 	}
 
 	auto end = high_resolution_clock::now();
 
-	auto time_taken = duration_cast<milliseconds>(end - start);
+	auto time_taken = duration_cast<microseconds>(end - start);
 	cout<<time_taken.count()<<endl;
 }
 
