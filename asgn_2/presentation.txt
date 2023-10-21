@@ -1,0 +1,74 @@
+Class Node {
+	ID
+	Node* parent
+	Node* Children[]
+	function_ptr NodeScheduler
+	function_ptr Updater // Post execution
+	bool is_thread
+	Virtual_time
+	data[]
+}
+
+
+scheduler(root) {
+	if(root.is_thread) {
+		return &root
+	}
+	else {
+		return schedule(root.NodeScheduler())
+	}
+}
+
+
+sfq_selector(children_Nodes[]) { // Example of a node_scheduler
+	min_start_tag = inf
+	Node* child = NULL
+	
+	for (Child ∈ children_Nodes) {
+		if(min_start_tag > Child.start_tag) {
+			min_start_tag = Child.start_tag
+			child = Child
+		}
+	}
+	
+	Node.Virtual_time = child.start_tag
+	
+	return child
+}
+
+insert(newNode, position[], root, i) {
+	if(i == sizeof(position)) {
+		root.children = root.children U newNode
+	}
+	
+	for(child ∈ root.children) {
+		if(position[i] == child.ID) {
+			newNode.start_tag = root.Virtual_time
+			newNode.finish_tag = 0
+			insert(newNode, position[], child, i+1)
+		}
+	}
+}
+
+
+updater(Node, lengthQuantum) {
+	if(Node == root) {
+		return
+	}
+	
+	Node.finish_tag = Node.start_tag + lengthQuantum / Node.weight
+	Node.start_tag = max(Node.Virtual_time, Node.finish_tag)
+	
+	updater(Node.parent, lengthQuantum)
+}
+
+block(Node) {
+	parent_node = Node.parent
+	
+	for(child ∈ parent_node.Children) {
+		if(child == Node) {
+			parent_node.Children = parent_node.Children / child
+		}
+	}
+}
+
