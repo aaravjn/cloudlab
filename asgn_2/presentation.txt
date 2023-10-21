@@ -67,8 +67,7 @@ block(Node) {
 	
 	for(child ∈ parent_node.Children) {
 		if(child == Node) {
-			parent_node.Children = parent_node.Children / child
+			parent_node.Children = parent_node.Children \ child
 		}
 	}
 }
-

@@ -17,10 +17,10 @@ class Node {
         int finish_tag;
         int weight;
         void* (*selector)(vector<void*>, bool); // Will schedule one of it's child node
-        void (*updater)(); // Will update the state of the ancestor path of the tree. Eg:- start_tag, finish_tag, virtual_time.
+        void (*updater)(Node*, int, Node*); // Will update the state of the ancestor path of the tree. Eg:- start_tag, finish_tag, virtual_time.
         int virtual_time;
 
-        Node(int id, int Weight, void* (*funcSelector)(vector<void*>, bool), void (*funcUpdater)()) { //  Constructor function of the class Node
+        Node(int id, int Weight, void* (*funcSelector)(vector<void*>, bool), void (*funcUpdater)(Node*, int, Node*)) { //  Constructor function of the class Node
             ID = id;
             weight = Weight;
             selector = funcSelector;
@@ -82,4 +82,44 @@ void* sfq_selector(vector<void*> children, bool is_leaf) { // Selector function 
     }
 
     return finalChild;
+}
+
+
+void insert(void* newNode, vector<int> position, Node* root, int i = 0) {
+    if(i == position.size()) {
+        root->children.push_back(newNode);
+    }
+    else {
+        for(void* child : root->children) {
+            if(((Node *)child)->ID == position[i]) {
+                insert(newNode, position, (Node*)child, i+1);
+                return ;
+            }
+        }
+    }
+}
+
+
+void sfq_updater(Node* node, int lengthQuantum, Node* root) {
+    if(node == root) {
+        return ;
+    }
+    
+    node->finish_tag = (node)->start_tag + lengthQuantum / node->weight;
+    node->start_tag = max(node->virtual_time, node->finish_tag);
+
+    sfq_updater(node->parent, lengthQuantum, root);
+}
+
+
+void block(Thread* thread) {
+    Node* parentNode = thread->parent;
+    auto start_itr = parentNode->children.begin();
+
+    for(int i = 0;i < parentNode->children.size();i++) {
+        if((Thread *)parentNode->children[i] == thread) {
+            (parentNode->children).erase(i + start_itr);
+            break;
+        }
+    }
 }
