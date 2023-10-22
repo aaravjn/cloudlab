@@ -1,16 +1,22 @@
 /*
-A Simulation of the Hierarchial SFQ algorithm
+    A Simulation of the Hierarchial SFQ algorithm
 */
-
 #include <iostream>
 #include <vector>
 
 using namespace std;
 
+
+/*
+    This will form the basis of the tree structure of the hsfq algorithm.
+    This Tree will be predefined before pushing any jobs to it.
+    The tree will represent the hierarchy of the SFQ algorithm.
+*/
+
 class Node {
     public:
         int ID;
-        Node* parent;
+        Node* parent; // Pointer to the parent node.
         vector<void*> children;
         bool is_leaf;
         int start_tag;
@@ -27,6 +33,7 @@ class Node {
             updater = funcUpdater;
         }
 };
+
 class Thread { // A class for the thread object in the hsfq tree
     public:
         int ID;
@@ -62,8 +69,14 @@ void* sfq_selector(vector<void*> children, bool is_leaf) { // Selector function 
     int min_start_tag = 1e9;
     void* finalChild = NULL;
 
+    /*
+        Will check if the current node is leaf node or not.
+        If so, will select the thread to be executed. If not, it will select one of the children
+        node to be analyzed further.
+    */
+
     if(is_leaf) {
-        for(void* thread : children) {
+        for(void* thread : children) { // Searching through the entire children array of the node.
             if(((Thread *)thread)->start_tag < min_start_tag) {
                 min_start_tag = ((Thread *)thread)->start_tag;
                 finalChild = thread;
@@ -85,7 +98,7 @@ void* sfq_selector(vector<void*> children, bool is_leaf) { // Selector function 
 }
 
 
-void insert(void* newNode, vector<int> position, Node* root, int i = 0) {
+void insert(void* newNode, vector<int> position, Node* root, int i = 0) { // Used to insert any new node or thread.
     if(i == position.size()) {
         root->children.push_back(newNode);
     }
@@ -100,19 +113,19 @@ void insert(void* newNode, vector<int> position, Node* root, int i = 0) {
 }
 
 
-void sfq_updater(Node* node, int lengthQuantum, Node* root) {
+void sfq_updater(Node* node, int lengthQuantum, Node* root) { // It will update the state of the tree like changing it's virtual_time or start_tag and finish_tags of the nodes.
     if(node == root) {
         return ;
     }
     
-    node->finish_tag = (node)->start_tag + lengthQuantum / node->weight;
+    node->finish_tag = node->start_tag + lengthQuantum / node->weight;
     node->start_tag = max(node->virtual_time, node->finish_tag);
 
     sfq_updater(node->parent, lengthQuantum, root);
 }
 
 
-void block(Thread* thread) {
+void block(Thread* thread) { // Blocks a thread by removing it from the tree structure. It will later on be pushed again in the tree based on its position.
     Node* parentNode = thread->parent;
     auto start_itr = parentNode->children.begin();
 
