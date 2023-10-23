@@ -8,9 +8,6 @@ using namespace std;
 int MAX_JOBS = 100;
 
 
-void generateJobs_Random(void);
-
-
 
 int main() {
     /*
@@ -38,10 +35,12 @@ int main() {
     while(root->children.size() > 0) {
         Thread* thread = (Thread *)scheduler(root, 0);
         if(--thread->process_time == 0) {
+            cout<<thread->start_tag;
             block(thread);
         }
+        Node* Parent = thread->parent;
+        Parent->updater(root,thread, 1, 1);
         timer++;
-        cout<<timer<<endl;
     }
     return 0;
 }

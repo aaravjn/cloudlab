@@ -10,14 +10,16 @@ class Node {
         int finish_tag;
         int weight;
         void* (*selector)(vector<void*>, bool); // Will schedule one of it's child node
-        void (*updater)(Node*, int, Node*); // Will update the state of the ancestor path of the tree. Eg:- start_tag, finish_tag, virtual_time.
+        void (*updater)(Node*,void*, int, bool); // Will update the state of the ancestor path of the tree. Eg:- start_tag, finish_tag, virtual_time.
         int virtual_time;
+        int numberOfThreads; 
 
-        Node(int id, int Weight, void* (*funcSelector)(vector<void*>, bool), void (*funcUpdater)(Node*, int, Node*)) { //  Constructor function of the class Node
+        Node(int id, int Weight, void* (*funcSelector)(vector<void*>, bool), void (*funcUpdater)(Node*, void*, int, bool)) { //  Constructor function of the class Node
             ID = id;
             weight = Weight;
             selector = funcSelector;
             updater = funcUpdater;
+            parent = NULL;
         }
 };
 
@@ -46,4 +48,4 @@ void* scheduler(void*, bool);
 void* sfq_selector(std::vector<void*>, bool);
 void insert(void*, std::vector<int>, Node*, int);
 void block(Thread*);
-void sfq_updater(Node*, int, Node*);
+void sfq_updater(Node*, void*, int, bool );

@@ -75,15 +75,25 @@ void insert(void* newNode, vector<int> position, Node* root, int i = 0) { // Use
 }
 
 
-void sfq_updater(Node* node, int lengthQuantum, Node* root) { // It will update the state of the tree like changing it's virtual_time or start_tag and finish_tags of the nodes.
+void sfq_updater(Node* root,void* node, int lengthQuantum, bool is_thread = 1) { // It will update the state of the tree like changing it's virtual_time or start_tag and finish_tags of the nodes.
     if(node == root) {
         return ;
     }
-    
-    node->finish_tag = node->start_tag + lengthQuantum / node->weight;
-    node->start_tag = max(node->virtual_time, node->finish_tag);
-
-    sfq_updater(node->parent, lengthQuantum, root);
+    if(is_thread) {
+        ((Thread *)node)->finish_tag = ((Thread *)node)->start_tag + lengthQuantum / ((Thread *)node)->weight;
+        ((Thread *)node)->start_tag = max(((Thread *)node)->parent->virtual_time, ((Thread *)node)->finish_tag);
+        Node* superParent = ((Thread *)node)->parent->parent;
+        if(superParent)
+            superParent->updater(root,((Thread *)node)->parent, lengthQuantum, 0);
+    }
+    else {
+        Node * x = (Node*)node;
+        ((Node *)node)->finish_tag = ((Node *)node)->start_tag + lengthQuantum / ((Node *)node)->weight;
+        ((Node *)node)->start_tag = max(((Node *)node)->parent->virtual_time, ((Node *)node)->finish_tag);
+        Node* superParent = ((Thread *)node)->parent->parent;
+        if(superParent)
+            superParent->updater(root,((Thread *)node)->parent, lengthQuantum, 0);
+    }
 }
 
 
