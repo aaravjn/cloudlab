@@ -20,6 +20,8 @@ class Node {
             selector = funcSelector;
             updater = funcUpdater;
             parent = NULL;
+            numberOfThreads=0;
+            virtual_time = 0;
         }
 };
 
@@ -33,10 +35,9 @@ class Thread { // A class for the thread object in the hsfq tree
         bool is_thread;
         Node* parent; // a pointer to the parent node
     
-        Thread(int id, int processTime, int startTag, int Weight) { // constructor function for the class Thread
+        Thread(int id, int processTime, int Weight) { // constructor function for the class Thread
             ID = id;
             process_time = processTime;
-            start_tag = startTag;
             weight = Weight;
             parent = NULL;
             is_thread = 1;
@@ -46,6 +47,7 @@ class Thread { // A class for the thread object in the hsfq tree
 
 void* scheduler(void*, bool);
 void* sfq_selector(std::vector<void*>, bool);
-void insert(void*, std::vector<int>, Node*, int);
+void insert(Thread*, std::vector<int>, Node*, int);
 void block(Thread*);
 void sfq_updater(Node*, void*, int, bool );
+void notifyThreadRemoved(Node * node);

@@ -28,7 +28,7 @@ void* scheduler(void* root, bool is_thread) { // The main scheduler function of 
 
 
 void* sfq_selector(vector<void*> children, bool is_leaf) { // Selector function which is specific to each node.
-    int min_start_tag = 1e9;
+    int min_start_tag = INT32_MAX;
     void* finalChild = NULL;
 
     /*
@@ -48,7 +48,7 @@ void* sfq_selector(vector<void*> children, bool is_leaf) { // Selector function 
     }
     else {
         for(void* child : children) {
-            if(((Node *)child)->start_tag < min_start_tag) {
+            if(((Node *)child)->start_tag <= min_start_tag && ((Node *)child)->numberOfThreads ) {
                 min_start_tag = ((Node *)child)->start_tag;
                 finalChild = child;
             }
@@ -60,9 +60,15 @@ void* sfq_selector(vector<void*> children, bool is_leaf) { // Selector function 
 }
 
 
-void insert(void* newNode, vector<int> position, Node* root, int i = 0) { // Used to insert any new node or thread.
+void insert(Thread* newNode, vector<int> position, Node* root, int i) { // Used to insert any new node or thread.
+    root->numberOfThreads++;
+    if(root->numberOfThreads==0 && root->parent){
+        root->start_tag = max(root->parent->virtual_time, newNode->finish_tag);
+    }
     if(i == position.size()) {
         root->children.push_back(newNode);
+        newNode->parent = root;
+        newNode->start_tag = max(root->virtual_time, newNode->finish_tag);
     }
     else {
         for(void* child : root->children) {
@@ -107,4 +113,10 @@ void block(Thread* thread) { // Blocks a thread by removing it from the tree str
             break;
         }
     }
+    notifyThreadRemoved(thread->parent);
+}
+void notifyThreadRemoved(Node * node){
+    if(node == NULL)return;
+    node->numberOfThreads--;
+    notifyThreadRemoved(node->parent);
 }

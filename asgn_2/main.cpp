@@ -25,17 +25,17 @@ int main() {
     root->is_leaf = 1;
     root->virtual_time = 0;
 
-    Thread* t1 = new Thread(2, 10, 0, 1);
-    Thread* t2 = new Thread(3, 10, 0, 1);
-    
-    root->children.push_back(t1);
-    root->children.push_back(t2);
+    Thread* t1 = new Thread(2, 10, 1);
+    Thread* t2 = new Thread(3, 10, 2);
+    insert(t1,{1},root,1);
+    insert(t2,{1},root,1);
 
     int timer = 0;
-    while(root->children.size() > 0) {
+    while(root->numberOfThreads > 0) {
         Thread* thread = (Thread *)scheduler(root, 0);
+        cout<<thread->ID;
         if(--thread->process_time == 0) {
-            cout<<thread->start_tag;
+            // cout<<thread->start_tag<<endl;
             block(thread);
         }
         Node* Parent = thread->parent;
