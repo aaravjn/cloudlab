@@ -1,0 +1,611 @@
+time:0
+Item A->0
+
+time:1
+Item B->0
+
+time:2
+Item A->1
+
+time:3
+Item B->1
+
+time:4
+Item A->2
+
+time:5
+Item B->2
+
+time:6
+Item A->3
+
+time:7
+Item B->3
+
+time:8
+Item A->4
+                   blocked Item A
+
+time:9
+Item B->4
+
+time:10
+Item B->5
+
+time:11
+Item B->6
+
+time:12
+Item B->7
+
+time:13
+Item B->8
+
+time:14
+Item B->9
+
+time:15
+Item B->10
+
+time:16
+Item B->11
+
+time:17
+Item B->12
+
+time:18
+Item B->13
+
+time:19
+Item B->14
+
+time:20
+Item B->15
+
+time:21
+Item B->16
+
+time:22
+Item B->17
+
+time:23
+Item B->18
+
+time:24
+Item B->19
+
+time:25
+Item B->20
+
+time:26
+Item B->21
+
+time:27
+Item B->22
+
+time:28
+Item B->23
+
+time:29
+Item B->24
+
+time:30
+Item B->25
+
+time:31
+Item B->26
+
+time:32
+Item B->27
+
+time:33
+Item B->28
+
+time:34
+Item B->29
+
+time:35
+Item B->30
+
+time:36
+Item B->31
+
+time:37
+Item B->32
+
+time:38
+Item B->33
+
+time:39
+Item B->34
+
+time:40
+Item B->35
+
+time:41
+Item B->36
+
+time:42
+Item B->37
+
+time:43
+Item B->38
+
+time:44
+Item B->39
+
+time:45
+Item B->40
+
+time:46
+Item B->41
+
+time:47
+Item B->42
+
+time:48
+Item B->43
+
+time:49
+Item B->44
+
+time:50
+Item B->45
+
+time:51
+Item B->46
+
+time:52
+Item B->47
+
+time:53
+Item B->48
+
+time:54
+Item B->49
+exitted:Item B
+
+time:55
+
+time:56
+
+time:57
+
+time:58
+
+time:59
+
+time:60
+
+time:61
+
+time:62
+
+time:63
+
+time:64
+
+time:65
+
+time:66
+
+time:67
+
+time:68
+
+time:69
+
+time:70
+
+time:71
+
+time:72
+
+time:73
+
+time:74
+
+time:75
+
+time:76
+
+time:77
+
+time:78
+
+time:79
+
+time:80
+
+time:81
+
+time:82
+
+time:83
+
+time:84
+
+time:85
+
+time:86
+
+time:87
+
+time:88
+
+time:89
+
+time:90
+
+time:91
+
+time:92
+
+time:93
+
+time:94
+
+time:95
+
+time:96
+
+time:97
+
+time:98
+
+time:99
+
+time:100
+
+time:101
+
+time:102
+
+time:103
+
+time:104
+
+time:105
+
+time:106
+
+time:107
+
+time:108
+
+time:109
+
+time:110
+
+time:111
+
+time:112
+
+time:113
+
+time:114
+
+time:115
+
+time:116
+
+time:117
+
+time:118
+
+time:119
+
+time:120
+
+time:121
+
+time:122
+
+time:123
+
+time:124
+
+time:125
+
+time:126
+
+time:127
+
+time:128
+
+time:129
+
+time:130
+
+time:131
+
+time:132
+
+time:133
+
+time:134
+
+time:135
+
+time:136
+
+time:137
+
+time:138
+
+time:139
+
+time:140
+
+time:141
+
+time:142
+
+time:143
+
+time:144
+
+time:145
+
+time:146
+
+time:147
+
+time:148
+
+time:149
+
+time:150
+
+time:151
+
+time:152
+
+time:153
+
+time:154
+
+time:155
+
+time:156
+
+time:157
+
+time:158
+
+time:159
+
+time:160
+
+time:161
+
+time:162
+
+time:163
+
+time:164
+
+time:165
+
+time:166
+
+time:167
+
+time:168
+
+time:169
+
+time:170
+
+time:171
+
+time:172
+
+time:173
+
+time:174
+
+time:175
+
+time:176
+
+time:177
+
+time:178
+
+time:179
+
+time:180
+
+time:181
+
+time:182
+
+time:183
+
+time:184
+
+time:185
+
+time:186
+
+time:187
+
+time:188
+
+time:189
+
+time:190
+
+time:191
+
+time:192
+
+time:193
+
+time:194
+
+time:195
+
+time:196
+
+time:197
+
+time:198
+
+time:199
+
+time:200
+
+time:201
+
+time:202
+
+time:203
+
+time:204
+
+time:205
+
+time:206
+
+time:207
+
+time:208
+                   wakeup Item A
+
+time:209
+Item A->49
+
+time:210
+Item A->50
+
+time:211
+Item A->51
+
+time:212
+Item A->52
+
+time:213
+Item A->53
+
+time:214
+Item A->54
+
+time:215
+Item A->55
+
+time:216
+Item A->56
+
+time:217
+Item A->57
+
+time:218
+Item A->58
+
+time:219
+Item A->59
+
+time:220
+Item A->60
+
+time:221
+Item A->61
+
+time:222
+Item A->62
+
+time:223
+Item A->63
+
+time:224
+Item A->64
+
+time:225
+Item A->65
+
+time:226
+Item A->66
+
+time:227
+Item A->67
+
+time:228
+Item A->68
+
+time:229
+Item A->69
+
+time:230
+Item A->70
+
+time:231
+Item A->71
+
+time:232
+Item A->72
+
+time:233
+Item A->73
+
+time:234
+Item A->74
+
+time:235
+Item A->75
+
+time:236
+Item A->76
+
+time:237
+Item A->77
+
+time:238
+Item A->78
+
+time:239
+Item A->79
+
+time:240
+Item A->80
+
+time:241
+Item A->81
+
+time:242
+Item A->82
+
+time:243
+Item A->83
+
+time:244
+Item A->84
+
+time:245
+Item A->85
+
+time:246
+Item A->86
+
+time:247
+Item A->87
+
+time:248
+Item A->88
+
+time:249
+Item A->89
+
+time:250
+Item A->90
+
+time:251
+Item A->91
+
+time:252
+Item A->92
+
+time:253
+Item A->93
+exitted:Item A

@@ -1,0 +1,54 @@
+[
+    [
+        {
+            "process_time": 10,
+            "name": "Item A",
+            "weight": 1,
+            "position": [
+                1
+            ],
+            "blocked_states": [
+            ]
+        },
+        {
+            "process_time": 10,
+            "name": "Item B",
+            "weight": 2,
+            "position": [
+                1
+            ],
+            "blocked_states": [
+            ]
+        },
+        {
+            "process_time": 10,
+            "name": "Item C",
+            "weight": 3,
+            "position": [
+                1
+            ],
+            "blocked_states": [
+            ]
+        },
+        {
+            "process_time": 10,
+            "name": "Item D",
+            "weight": 4,
+            "position": [
+                1
+            ],
+            "blocked_states": [
+            ]
+        },
+        {
+            "process_time": 10,
+            "name": "Item E",
+            "weight": 5,
+            "position": [
+                1
+            ],
+            "blocked_states": [
+            ]
+        }
+    ]
+]

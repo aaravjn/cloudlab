@@ -15,6 +15,8 @@ using namespace std;
 int MAX_JOBS = 100;
 int uniqueID = 2;
 unordered_map<int, int> iterators;
+
+
 rapidjson::Document doc {};
 void inputThreads(int timer){
     for(int i=0;i<doc[timer].Size();i++){
@@ -35,12 +37,11 @@ void inputThreads(int timer){
             threadPositions[thread->ID].push_back(value);
         }
         insert(thread,threadPositions[thread->ID],root,1);
-
     }
 }
 
 int main() {
-    ifstream ifs { R"(input2.json)" };
+    ifstream ifs { R"(unequal_benchmark.json)" };
     rapidjson::IStreamWrapper isw { ifs };
     doc.ParseStream( isw );
     /*
