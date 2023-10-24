@@ -35,14 +35,18 @@ class Thread { // A class for the thread object in the hsfq tree
         int weight;
         bool is_thread;
         vector<pair<int, int>> blockStates; // Blocks the thread according to the remaining process time(pair.first) and time for which to block(pair.second)
+                                            // Always in sorted order.
         Node* parent; // a pointer to the parent node
     
-        Thread(int id, int processTime, int Weight) { // constructor function for the class Thread
+        Thread(int id, int processTime, int Weight, vector<pair<int, int>> block_states) { // constructor function for the class Thread
             ID = id;
             process_time = processTime;
             weight = Weight;
             parent = NULL;
             is_thread = 1;
+            for(auto x  : block_states){
+                blockStates.push_back(x);
+            }
         }
 };
 
@@ -52,8 +56,11 @@ class Comparator {
             return a->unblockTime < b->unblockTime;
         }
 };
-priority_queue<Thread*, vector<Thread*>, Comparator> blockedQueue;
+extern priority_queue<Thread*, vector<Thread*>, Comparator> blockedQueue;
+extern unordered_map<int, vector<int>> threadPositions;
 extern int timer;
+extern Node* root;
+
 
 void* scheduler(void*, bool);
 void* sfq_selector(std::vector<void*>, bool);

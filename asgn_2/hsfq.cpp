@@ -13,6 +13,11 @@ using namespace std;
     The tree will represent the hierarchy of the SFQ algorithm.
 */
 
+priority_queue<Thread*, vector<Thread*>, Comparator> blockedQueue;
+unordered_map<int, vector<int>> threadPositions;
+int timer;
+Node* root;
+
 
 void* scheduler(void* root, bool is_thread) { // The main scheduler function of the algorithm.
     if(is_thread) {
@@ -68,6 +73,7 @@ void insert(Thread* newNode, vector<int> position, Node* root, int i) { // Used 
         root->children.push_back(newNode);
         newNode->parent = root;
         newNode->start_tag = max(root->virtual_time, newNode->finish_tag);
+        threadPositions[newNode->ID] = position;
     }
     else {
         for(void* child : root->children) {
@@ -114,6 +120,10 @@ void block(Thread* thread, bool restore, int blockTime) { // Blocks a thread by 
     }
     if(restore) {
         thread->unblockTime = timer + blockTime;
+        blockedQueue.push(thread);
+    }
+    else {
+        threadPositions.erase(thread->ID);
     }
     notifyThreadRemoved(thread->parent);
 }
@@ -130,7 +140,7 @@ void threadWakeup() {
         Thread* thread = blockedQueue.top();
         if(thread->unblockTime <= timer) {
             blockedQueue.pop();
-            // insert the thread to its correct position
+            insert(thread, threadPositions[thread->ID], root, 0);
         }
         else break;
     }
