@@ -39,15 +39,12 @@ class Thread { // A class for the thread object in the hsfq tree
                                             // Always in sorted order.
         Node* parent; // a pointer to the parent node
     
-        Thread(int id, int processTime, int Weight, vector<pair<int, int>> block_states) { // constructor function for the class Thread
+        Thread(int id, int processTime, int Weight) { // constructor function for the class Thread
             ID = id;
             process_time = processTime;
             weight = Weight;
             parent = NULL;
             is_thread = 1;
-            for(auto x  : block_states){
-                blockStates.push_back(x);
-            }
         }
 };
 

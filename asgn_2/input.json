@@ -1,0 +1,268 @@
+[
+    [
+        {
+            "process_time": 10,
+            "name": "Item A",
+            "weight": 5,
+            "position": [
+                1
+            ],
+            "blocked_states": [
+                {
+                    "start_time": 2,
+                    "block_duration": 3
+                },
+                {
+                    "start_time": 6,
+                    "block_duration": 2
+                }
+            ]
+        },
+        {
+            "process_time": 15,
+            "name": "Item B",
+            "weight": 7,
+            "position": [
+                1
+            ],
+            "blocked_states": [
+                {
+                    "start_time": 3,
+                    "block_duration": 4
+                }
+            ]
+        }
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],        
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+        {
+            "name": "Item C",
+            "process_time": 12,
+            "weight": 6,
+            "position": [
+                1
+            ],
+            "blocked_states": [
+                {
+                    "start_time": 4,
+                    "block_duration": 2
+                },
+                {
+                    "start_time": 9,
+                    "block_duration": 3
+                }
+            ]
+        },
+        {
+            "name": "Item D",
+            "process_time": 8,
+            "weight": 4,
+            "position": [
+                1
+            ],
+            "blocked_states": [
+                {
+                    "start_time": 5,
+                    "block_duration": 2
+                },
+                {
+                    "start_time": 7,
+                    "block_duration": 1
+                }
+            ]
+        },
+        {
+            "name": "Item E",
+            "process_time": 14,
+            "weight": 8,
+            "position": [
+                1
+            ],
+            "blocked_states": [
+                {
+                    "start_time": 3,
+                    "block_duration": 4
+                }
+            ]
+        }
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+        {
+            "name": "Item F",
+            "process_time": 18,
+            "weight": 9,
+            "position": [
+                1
+            ],
+            "blocked_states": [
+                {
+                    "start_time": 5,
+                    "block_duration": 3
+                },
+                {
+                    "start_time": 11,
+                    "block_duration": 2
+                }
+            ]
+        },
+        {
+            "name": "Item G",
+            "process_time": 11,
+            "weight": 6,
+            "position": [
+                1
+            ],
+            "blocked_states": [
+                {
+                    "start_time": 6,
+                    "block_duration": 1
+                },
+                {
+                    "start_time": 8,
+                    "block_duration": 2
+                }
+            ]
+        },
+        {
+            "name": "Item H",
+            "process_time": 20,
+            "weight": 10,
+            "position": [
+                1
+            ],
+            "blocked_states": [
+                {
+                    "start_time": 4,
+                    "block_duration": 5
+                }
+            ]
+        }
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+        {
+          "name": "Item I",
+          "process_time": 15,
+          "weight": 7,
+          "position": [1],
+          "blocked_states": []
+        },
+        {
+          "name": "Item J",
+          "process_time": 12,
+          "weight": 6,
+          "position": [1],
+          "blocked_states": [
+            {
+              "start_time": 5,
+              "block_duration": 2
+            }
+          ]
+        },
+        {
+          "name": "Item K",
+          "process_time": 14,
+          "weight": 8,
+          "position": [1],
+          "blocked_states": []
+        }
+    ]      
+]
