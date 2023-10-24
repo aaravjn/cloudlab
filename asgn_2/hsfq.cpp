@@ -96,9 +96,9 @@ void sfq_updater(Node* root,void* node, int lengthQuantum, bool is_thread = 1) {
         Node * x = (Node*)node;
         ((Node *)node)->finish_tag = ((Node *)node)->start_tag + (double)lengthQuantum / ((Node *)node)->weight;
         ((Node *)node)->start_tag = max(((Node *)node)->parent->virtual_time, ((Node *)node)->finish_tag);
-        Node* superParent = ((Thread *)node)->parent->parent;
+        Node* superParent = ((Node *)node)->parent->parent;
         if(superParent)
-            superParent->updater(root,((Thread *)node)->parent, lengthQuantum, 0);
+            superParent->updater(root,((Node *)node)->parent, lengthQuantum, 0);
     }
 }
 
