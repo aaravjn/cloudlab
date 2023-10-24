@@ -24,31 +24,40 @@ int main() {
     root->is_leaf = 1;
     root->virtual_time = 0;
     
-    Thread* t1 = new Thread(2, 10, 1, {{5, 2}});
-    Thread* t2 = new Thread(3, 10, 2, {{6, 3}});
-    insert(t1,{1},root,1);
-    insert(t2,{1},root,1);
+    Thread* t1 = new Thread(2, 20, 1, {{5, 4}});
+    Thread* t2 = new Thread(3, 20, 2, {{6, 3}});
+    threadPositions[t1->ID]={1};
+    threadPositions[t2->ID]={2};
+    iterators[t1->ID] = 0;
+    iterators[t1->ID] = 0;
+    insert(t1,threadPositions[t1->ID],root,1);
+    insert(t2,threadPositions[t2->ID],root,1);
 
     timer = 0;
     while(root->numberOfThreads > 0 or !blockedQueue.empty()) {
-        Thread* thread = (Thread *)scheduler(root, 0);
-        
-        cout<<thread->ID<<"->";
-        if(--thread->process_time == 0) {
-            block(thread, 0, 0);
+        cout<<"time:"<<timer<<endl;
+        if(root->numberOfThreads){
+            Thread* thread = (Thread *)scheduler(root, 0);
+            
+            cout<<thread->ID<<"->";
+            cout<<thread->start_tag<<endl;
+            if(--thread->process_time == 0) {
+                cout<<"exitted:"<<thread->ID<<endl;
+                block(thread, 0, 0);
+            }
+            // blocking mechanism
+            int i = iterators[thread->ID];
+            if(i<thread->blockStates.size() && thread->blockStates[i].first == thread->process_time) {
+                block(thread, 1, thread->blockStates[i].second);
+                iterators[thread->ID]++;
+            }
+
+            Node* Parent = thread->parent;
+            Parent->updater(root, thread, 1, 1);
+            
         }
-
-
-        // blocking mechanism
-        int i = iterators[thread->ID];
-        if(thread->blockStates[i].first == thread->process_time) {
-            block(thread, 1, thread->blockStates[i].second);
-            iterators[thread->ID]++;
-        }
-
-        Node* Parent = thread->parent;
-        Parent->updater(root, thread, 1, 1);
-        cout<<thread->start_tag<<endl;
+        threadWakeup();
+        cout<<endl;
         timer++;
     }
     return 0;

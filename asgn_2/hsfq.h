@@ -28,6 +28,7 @@ class Node {
 class Thread { // A class for the thread object in the hsfq tree
     public:
         int ID;
+        string name;
         int process_time; // remaining time to execute the thread, (in seconds)
         double start_tag;
         double finish_tag;
@@ -68,3 +69,4 @@ void insert(Thread*, std::vector<int>, Node*, int);
 void block(Thread*, bool, int);
 void sfq_updater(Node*, void*, int, bool );
 void notifyThreadRemoved(Node * node);
+void threadWakeup();
