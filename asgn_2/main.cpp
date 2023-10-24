@@ -1,4 +1,4 @@
-#include <iostream>
+#include <bits/stdc++.h>
 #include "hsfq.h"
 // #include "rapidjson/document.h" 
 // #include "rapidjson/filereadstream.h" 
@@ -28,12 +28,12 @@ int main() {
     insert(t1,{1},root,1);
     insert(t2,{1},root,1);
 
-    int timer = 0;
+    timer = 0;
     while(root->numberOfThreads > 0) {
         Thread* thread = (Thread *)scheduler(root, 0);
         cout<<thread->ID<<"->";
         if(--thread->process_time == 0) {
-            block(thread);
+            block(thread, 0, 0);
         }
         Node* Parent = thread->parent;
         Parent->updater(root, thread, 1, 1);

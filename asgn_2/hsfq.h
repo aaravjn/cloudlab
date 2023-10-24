@@ -31,6 +31,7 @@ class Thread { // A class for the thread object in the hsfq tree
         int process_time; // remaining time to execute the thread, (in seconds)
         double start_tag;
         double finish_tag;
+        int unblockTime;
         int weight;
         bool is_thread;
         vector<pair<int, int>> blockStates; // Blocks the thread according to the remaining process time(pair.first) and time for which to block(pair.second)
@@ -45,10 +46,18 @@ class Thread { // A class for the thread object in the hsfq tree
         }
 };
 
+class Comparator {
+    public:
+        bool operator()(Thread* &a, Thread* &b) {
+            return a->unblockTime < b->unblockTime;
+        }
+};
+priority_queue<Thread*, vector<Thread*>, Comparator> blockedQueue;
+extern int timer;
 
 void* scheduler(void*, bool);
 void* sfq_selector(std::vector<void*>, bool);
 void insert(Thread*, std::vector<int>, Node*, int);
-void block(Thread*);
+void block(Thread*, bool, int);
 void sfq_updater(Node*, void*, int, bool );
 void notifyThreadRemoved(Node * node);

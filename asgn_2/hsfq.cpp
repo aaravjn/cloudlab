@@ -1,8 +1,7 @@
 /*
     A Simulation of the Hierarchial SFQ algorithm
 */
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 #include "hsfq.h"
 
 using namespace std;
@@ -103,7 +102,7 @@ void sfq_updater(Node* root,void* node, int lengthQuantum, bool is_thread = 1) {
 }
 
 
-void block(Thread* thread) { // Blocks a thread by removing it from the tree structure. It will later on be pushed again in the tree based on its position.
+void block(Thread* thread, bool restore, int blockTime) { // Blocks a thread by removing it from the tree structure. It will later on be pushed again in the tree based on its position.
     Node* parentNode = thread->parent;
     auto start_itr = parentNode->children.begin();
 
@@ -113,6 +112,9 @@ void block(Thread* thread) { // Blocks a thread by removing it from the tree str
             break;
         }
     }
+    if(restore) {
+        thread->unblockTime = timer + blockTime;
+    }
     notifyThreadRemoved(thread->parent);
 }
 
@@ -121,4 +123,15 @@ void notifyThreadRemoved(Node * node){
     if(node == NULL) return;
     node->numberOfThreads--;
     notifyThreadRemoved(node->parent);
+}
+
+void threadWakeup() {
+    while(!blockedQueue.empty()) {
+        Thread* thread = blockedQueue.top();
+        if(thread->unblockTime <= timer) {
+            blockedQueue.pop();
+            // insert the thread to its correct position
+        }
+        else break;
+    }
 }
