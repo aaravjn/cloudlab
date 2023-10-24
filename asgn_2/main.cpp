@@ -39,7 +39,7 @@ int main() {
             block(thread);
         }
         Node* Parent = thread->parent;
-        Parent->updater(root,thread, 1, 1);
+        Parent->updater(root,thread, 20, 1);
         timer++;
     }
     return 0;

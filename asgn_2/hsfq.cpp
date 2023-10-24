@@ -61,10 +61,10 @@ void* sfq_selector(vector<void*> children, bool is_leaf) { // Selector function 
 
 
 void insert(Thread* newNode, vector<int> position, Node* root, int i) { // Used to insert any new node or thread.
-    root->numberOfThreads++;
     if(root->numberOfThreads==0 && root->parent){
         root->start_tag = max(root->parent->virtual_time, newNode->finish_tag);
     }
+    root->numberOfThreads++;
     if(i == position.size()) {
         root->children.push_back(newNode);
         newNode->parent = root;
@@ -96,9 +96,9 @@ void sfq_updater(Node* root,void* node, int lengthQuantum, bool is_thread = 1) {
         Node * x = (Node*)node;
         ((Node *)node)->finish_tag = ((Node *)node)->start_tag + lengthQuantum / ((Node *)node)->weight;
         ((Node *)node)->start_tag = max(((Node *)node)->parent->virtual_time, ((Node *)node)->finish_tag);
-        Node* superParent = ((Thread *)node)->parent->parent;
+        Node* superParent = ((Node *)node)->parent->parent;
         if(superParent)
-            superParent->updater(root,((Thread *)node)->parent, lengthQuantum, 0);
+            superParent->updater(root,((Node *)node)->parent, lengthQuantum, 0);
     }
 }
 
