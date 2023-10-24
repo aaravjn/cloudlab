@@ -1,13 +1,16 @@
-Class Node {
-	ID
-	Node* parent
-	Node* Children[]
-	function_ptr NodeScheduler
-	function_ptr Updater // Post execution
-	bool is_thread
-	Virtual_time
-	data[]
-}
+
+
+
+
+	Class Node {
+		ID
+		Parent_pointer
+		Children[]
+		function_ptr NodeScheduler
+		function_ptr Updater
+		bool is_thread
+		Virtual_time
+	}
 
 
 scheduler(root) {
@@ -20,7 +23,7 @@ scheduler(root) {
 }
 
 
-sfq_selector(children_Nodes[]) { // Example of a node_scheduler
+sfq_selector(children_Nodes[]) {
 	min_start_tag = inf
 	Node* child = NULL
 	
