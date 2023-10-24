@@ -8,7 +8,6 @@ using namespace std;
 int MAX_JOBS = 100;
 
 
-
 int main() {
     /*
         Generate jobs to be executed on the hspq tree structure.
@@ -20,11 +19,10 @@ int main() {
         4. Add the data to a json file.
     */
 
-
     Node* root = new Node(1, 1, &sfq_selector, &sfq_updater);
     root->is_leaf = 1;
     root->virtual_time = 0;
-
+    
     Thread* t1 = new Thread(2, 10, 1);
     Thread* t2 = new Thread(3, 10, 2);
     insert(t1,{1},root,1);
@@ -33,13 +31,13 @@ int main() {
     int timer = 0;
     while(root->numberOfThreads > 0) {
         Thread* thread = (Thread *)scheduler(root, 0);
-        cout<<thread->ID;
+        cout<<thread->ID<<"->";
         if(--thread->process_time == 0) {
-            // cout<<thread->start_tag<<endl;
             block(thread);
         }
         Node* Parent = thread->parent;
-        Parent->updater(root,thread, 1, 1);
+        Parent->updater(root, thread, 1, 1);
+        cout<<thread->start_tag<<endl;
         timer++;
     }
     return 0;

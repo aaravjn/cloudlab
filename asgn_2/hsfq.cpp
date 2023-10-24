@@ -15,7 +15,6 @@ using namespace std;
 */
 
 
-
 void* scheduler(void* root, bool is_thread) { // The main scheduler function of the algorithm.
     if(is_thread) {
         return root;
@@ -28,7 +27,7 @@ void* scheduler(void* root, bool is_thread) { // The main scheduler function of 
 
 
 void* sfq_selector(vector<void*> children, bool is_leaf) { // Selector function which is specific to each node.
-    int min_start_tag = INT32_MAX;
+    double min_start_tag = INT32_MAX;
     void* finalChild = NULL;
 
     /*
@@ -61,10 +60,11 @@ void* sfq_selector(vector<void*> children, bool is_leaf) { // Selector function 
 
 
 void insert(Thread* newNode, vector<int> position, Node* root, int i) { // Used to insert any new node or thread.
-    root->numberOfThreads++;
-    if(root->numberOfThreads==0 && root->parent){
+    if(root->numberOfThreads==0 && root->parent) {
         root->start_tag = max(root->parent->virtual_time, newNode->finish_tag);
     }
+    root->numberOfThreads++;
+
     if(i == position.size()) {
         root->children.push_back(newNode);
         newNode->parent = root;
@@ -86,7 +86,7 @@ void sfq_updater(Node* root,void* node, int lengthQuantum, bool is_thread = 1) {
         return ;
     }
     if(is_thread) {
-        ((Thread *)node)->finish_tag = ((Thread *)node)->start_tag + lengthQuantum / ((Thread *)node)->weight;
+        ((Thread *)node)->finish_tag = ((Thread *)node)->start_tag + (double)lengthQuantum / ((Thread *)node)->weight;
         ((Thread *)node)->start_tag = max(((Thread *)node)->parent->virtual_time, ((Thread *)node)->finish_tag);
         Node* superParent = ((Thread *)node)->parent->parent;
         if(superParent)
@@ -94,7 +94,7 @@ void sfq_updater(Node* root,void* node, int lengthQuantum, bool is_thread = 1) {
     }
     else {
         Node * x = (Node*)node;
-        ((Node *)node)->finish_tag = ((Node *)node)->start_tag + lengthQuantum / ((Node *)node)->weight;
+        ((Node *)node)->finish_tag = ((Node *)node)->start_tag + (double)lengthQuantum / ((Node *)node)->weight;
         ((Node *)node)->start_tag = max(((Node *)node)->parent->virtual_time, ((Node *)node)->finish_tag);
         Node* superParent = ((Thread *)node)->parent->parent;
         if(superParent)
@@ -115,8 +115,10 @@ void block(Thread* thread) { // Blocks a thread by removing it from the tree str
     }
     notifyThreadRemoved(thread->parent);
 }
+
+
 void notifyThreadRemoved(Node * node){
-    if(node == NULL)return;
+    if(node == NULL) return;
     node->numberOfThreads--;
     notifyThreadRemoved(node->parent);
 }
