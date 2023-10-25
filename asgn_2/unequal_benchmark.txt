@@ -24,7 +24,7 @@ Item B->3
 
 time:8
 Item A->4
-                   blocked Item A
+blocked Item A
 
 time:9
 Item B->4
@@ -472,7 +472,7 @@ time:206
 time:207
 
 time:208
-                   wakeup Item A
+wakeup Item A
 
 time:209
 Item A->49

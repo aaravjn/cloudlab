@@ -1,17 +1,12 @@
-
-
-
-
-	Class Node {
-		ID
-		Parent_pointer
-		Children[]
-		function_ptr NodeScheduler
-		function_ptr Updater
-		bool is_thread
-		Virtual_time
-	}
-
+Class Node {
+	ID
+	Parent_pointer
+	Children[]
+	function_ptr NodeScheduler
+	function_ptr Updater
+	bool is_thread
+	Virtual_time
+}
 
 scheduler(root) {
 	if(root.is_thread) {
@@ -40,6 +35,11 @@ sfq_selector(children_Nodes[]) {
 }
 
 insert(newNode, position[], root, i) {
+	if(root.numberOfThreads == 0 && root.parent != NULL) {
+        root.start_tag = max(root.parent.virtual_time, newNode.finish_tag)
+    }
+    root.numberOfThreads += 1
+
 	if(i == sizeof(position)) {
 		root.children = root.children U newNode
 	}
@@ -73,4 +73,18 @@ block(Node) {
 			parent_node.Children = parent_node.Children \ child
 		}
 	}
+
+	blockedQueue.push(Node)
+}
+
+
+void threadWakeup() {
+    while(blockedQueue != ϕ) {
+        thread = blockedQueue.top
+        if(thread.unblockTime <= timer) {
+            blockedQueue.pop
+            insert(thread)
+        }
+        else break
+    }
 }

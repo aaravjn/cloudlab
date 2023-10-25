@@ -44,6 +44,7 @@ int main() {
     ifstream ifs { R"(unequal_benchmark.json)" };
     rapidjson::IStreamWrapper isw { ifs };
     doc.ParseStream( isw );
+    
     /*
         Generate jobs to be executed on the hspq tree structure.
         1. Construct a hsfq tree. 
@@ -57,16 +58,6 @@ int main() {
     root = new Node(1, 1, &sfq_selector, &sfq_updater);
     root->is_leaf = 1;
     root->virtual_time = 0;
-    
-    // Thread* t1 = new Thread(2, 20, 1);
-    // Thread* t2 = new Thread(3, 20, 2);
-
-    // threadPositions[t1->ID]={1};
-    // threadPositions[t2->ID]={1};
-    // iterators[t1->ID] = 0;
-    // iterators[t1->ID] = 0;
-    // insert(t1,threadPositions[t1->ID],root,1);
-    // insert(t2,threadPositions[t2->ID],root,1);
 
     timer = 0;
     while(root->numberOfThreads > 0 or !blockedQueue.empty() or timer<doc.Size()) {
@@ -100,9 +91,3 @@ int main() {
     }
     return 0;
 }
-
-/*
-g++ -c hsfq.cpp
-g++ -c main.cpp -I ./
-g++ hsfq.o main.o
-*/
