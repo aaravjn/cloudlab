@@ -1,5 +1,6 @@
 #include <vector>
 using namespace std;
+
 class Node {
     public:
         int ID;
@@ -54,6 +55,7 @@ class Comparator {
             return a->unblockTime < b->unblockTime;
         }
 };
+
 extern priority_queue<Thread*, vector<Thread*>, Comparator> blockedQueue;
 extern unordered_map<int, vector<int>> threadPositions;
 extern int timer;
