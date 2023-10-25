@@ -2,7 +2,7 @@
 #include "hsfq.h"
 #include <fstream>
 #include <cstdlib>
-
+#include "rapidjson/filewritestream.h"
 #include <rapidjson/document.h>
 #include <rapidjson/istreamwrapper.h>
 #include <rapidjson/writer.h>
@@ -41,6 +41,12 @@ void inputThreads(int timer){
 }
 
 int main() {
+    // Output JSON document
+    rapidjson::Document d;
+    d.SetObject();
+    rapidjson::Value threadsList(rapidjson::kArrayType);
+    // 
+
     ifstream ifs { R"(unequal_benchmark.json)" };
     rapidjson::IStreamWrapper isw { ifs };
     doc.ParseStream( isw );
@@ -70,21 +76,36 @@ int main() {
 
     timer = 0;
     while(root->numberOfThreads > 0 or !blockedQueue.empty() or timer<doc.Size()) {
+        // Output JSON Code begins
+        rapidjson::Value thread_data(rapidjson::kObjectType);
+        thread_data.GetObject();
+        thread_data.AddMember("time", timer, d.GetAllocator());
+        // Output JSON Code ends
+
         cout<<"time:"<<timer<<endl;
         if(timer<doc.Size())
             inputThreads(timer);
         if(root->numberOfThreads){
             Thread* thread = (Thread *)scheduler(root, 0);
-            
+            // Output JSON Code begins
+            thread_data.AddMember("thread",rapidjson::StringRef(thread->name.c_str()), d.GetAllocator());
+            thread_data.AddMember("weight", thread->weight, d.GetAllocator());
+            // Output JSON Code ends
             cout<<thread->name<<"->";
             cout<<thread->start_tag<<endl;
             if(--thread->process_time == 0) {
+                // Output JSON Code
+                thread_data.AddMember("exitedThread",rapidjson::StringRef(thread->name.c_str()), d.GetAllocator());
+                // Output JSON Code ends
                 cout<<"exitted:"<<thread->name<<endl;
                 block(thread, 0, 0);
             }
             // blocking mechanism
             int i = iterators[thread->ID];
             if(i<thread->blockStates.size() && thread->blockStates[i].first == thread->process_time) {
+                // Output JSON Code begins
+                thread_data.AddMember("blockedThread",rapidjson::StringRef(thread->name.c_str()), d.GetAllocator());
+                // Output JSON Code ends
                 cout<<"                   blocked "<<thread->name<<endl;
                 block(thread, 1, thread->blockStates[i].second);
                 iterators[thread->ID]++;
@@ -94,10 +115,23 @@ int main() {
             Parent->updater(root, thread, 1, 1);
             
         }
+        threadsList.PushBack(thread_data,d.GetAllocator());
         threadWakeup();
         cout<<endl;
         timer++;
     }
+    // Writing to output file begins
+    d.AddMember("Threads", threadsList, d.GetAllocator());
+    FILE *fp = fopen("execution_data.json","wb"); // non-Windows use "w"
+
+    char writeBuffer[65536];
+
+    // Writing the changes to execution_data.json file
+    rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
+    rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
+    d.Accept(writer);
+    fclose(fp);
+    // Writing to output file ends
     return 0;
 }
 
