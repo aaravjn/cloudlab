@@ -9,11 +9,11 @@
             ],
             "blocked_states": [
                 {
-                    "start_time": 2,
+                    "start_time": 6,
                     "block_duration": 3
                 },
                 {
-                    "start_time": 6,
+                    "start_time": 2,
                     "block_duration": 2
                 }
             ]
@@ -90,11 +90,11 @@
             ],
             "blocked_states": [
                 {
-                    "start_time": 4,
+                    "start_time": 9,
                     "block_duration": 2
                 },
                 {
-                    "start_time": 9,
+                    "start_time": 4,
                     "block_duration": 3
                 }
             ]
@@ -108,11 +108,11 @@
             ],
             "blocked_states": [
                 {
-                    "start_time": 5,
+                    "start_time": 7,
                     "block_duration": 2
                 },
                 {
-                    "start_time": 7,
+                    "start_time": 5,
                     "block_duration": 1
                 }
             ]
@@ -160,11 +160,11 @@
             ],
             "blocked_states": [
                 {
-                    "start_time": 5,
+                    "start_time": 11,
                     "block_duration": 3
                 },
                 {
-                    "start_time": 11,
+                    "start_time": 5,
                     "block_duration": 2
                 }
             ]
@@ -178,11 +178,11 @@
             ],
             "blocked_states": [
                 {
-                    "start_time": 6,
+                    "start_time": 8,
                     "block_duration": 1
                 },
                 {
-                    "start_time": 8,
+                    "start_time": 6,
                     "block_duration": 2
                 }
             ]
@@ -264,5 +264,5 @@
           "position": [1],
           "blocked_states": []
         }
-    ]      
+    ] 
 ]

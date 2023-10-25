@@ -140,7 +140,6 @@ void threadWakeup() {
         Thread* thread = blockedQueue.top();
         if(thread->unblockTime <= timer) {
             blockedQueue.pop();
-            cout<<"                   wakeup "<<thread->name<<endl;
             insert(thread, threadPositions[thread->ID], root, 1);
         }
         else break;
