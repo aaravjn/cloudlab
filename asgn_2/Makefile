@@ -1,4 +1,4 @@
 myApp: hsfq.cpp hsfq.h main.cpp
-	g++ hsfq.cpp main.cpp -g -o myApp -I ./ && ./myApp > output.txt
+	g++ hsfq.cpp main.cpp -g -o myApp -I ./ && ./myApp
 clean:
 	rm ./myApp

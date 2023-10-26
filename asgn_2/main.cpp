@@ -46,7 +46,7 @@ int main() {
     rapidjson::Document d;
     d.SetObject();
     rapidjson::Value threadsList(rapidjson::kArrayType);
-    ifstream ifs { R"(unequal_benchmark.json)" };
+    ifstream ifs { R"(./benchmarks/unequal_benchmark.json)" };
     rapidjson::IStreamWrapper isw { ifs };
     doc.ParseStream( isw );
 
