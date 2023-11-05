@@ -46,7 +46,7 @@ int main() {
     rapidjson::Document d;
     d.SetObject();
     rapidjson::Value threadsList(rapidjson::kArrayType);
-    ifstream ifs { R"(./benchmarks/unequal_benchmark.json)" };
+    ifstream ifs { R"(./benchmarks/equal_benchmark.json)" };
     rapidjson::IStreamWrapper isw { ifs };
     doc.ParseStream( isw );
 
@@ -98,7 +98,6 @@ int main() {
         }
         threadsList.PushBack(thread_data,d.GetAllocator());
         threadWakeup();
-        cout<<endl;
         timer++;
     }
 

@@ -1,7 +1,7 @@
 [
     [
         {
-            "process_time": 10,
+            "process_time": 70,
             "name": "Item A",
             "weight": 1,
             "position": [
@@ -11,7 +11,7 @@
             ]
         },
         {
-            "process_time": 10,
+            "process_time": 80,
             "name": "Item B",
             "weight": 1,
             "position": [
@@ -21,7 +21,7 @@
             ]
         },
         {
-            "process_time": 10,
+            "process_time": 90,
             "name": "Item C",
             "weight": 1,
             "position": [
@@ -31,7 +31,7 @@
             ]
         },
         {
-            "process_time": 10,
+            "process_time": 100,
             "name": "Item D",
             "weight": 1,
             "position": [
@@ -41,7 +41,7 @@
             ]
         },
         {
-            "process_time": 10,
+            "process_time": 110,
             "name": "Item E",
             "weight": 1,
             "position": [
